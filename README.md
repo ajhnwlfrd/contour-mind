@@ -1,110 +1,58 @@
 # Contour Mind
 
-Contour Mind is a Claude skill that helps software developers move from vague ideas to clear, implementation‑ready specifications. It acts as a thinking layer — a guided discovery process that runs before coding.
+Most AI-assisted development tools focus on code generation. They help you build once you already know what to build. Contour Mind focuses on the step before that — the step most people skip.
 
-The core belief is simple: better software starts before coding. A coding agent can only execute well when the task is clear, bounded, and testable, so Contour Mind exists to produce that clarity.
+This is spec-driven development: the idea that the quality of what you build is determined before a single line of code is written.
 
-## What it is not
+## The problem
 
-Contour Mind is not an implementation agent, a project management tool, or a replacement for product judgment. It is optimized for feature‑level discovery and spec shaping, not long‑horizon planning.
+A coding agent can only execute well when the task is clear, bounded, and testable. But most software ideas don't start that way. They start as vague intentions, inherited assumptions, and half-formed requirements. When those go straight to implementation, you get code that solves the wrong problem well.
 
-## How to run it
+Contour Mind exists to close that gap.
 
-Prerequisites
-- A Claude client that supports skills.
-- This repository available in the location your Claude setup uses for skills (for example, inside the project directory Claude watches).
+## What it does
 
-Run steps
-- Download or clone this repository.
-- Open a terminal or command prompt in the project folder.
-- Start Claude with this project loaded so it can see the skills in .claude/skills.
-- In Claude, run /contour-mind and press Enter.
+Contour Mind is a thinking layer — a guided discovery conversation that runs before coding. It helps you turn a rough idea into a structured, implementation-ready spec by asking the right question at the right time.
 
-### Prerequisites
+You don't need to know any frameworks. The system applies mental models invisibly in the background — abstraction laddering, issue trees, first principles, inversion, second-order thinking — and routes between them based on the shape of the conversation. You experience it as a natural, focused dialogue.
 
-- A Claude client that supports skills.
-- This repository available in the location your Claude setup uses for skills (for example, inside the project directory Claude watches).
-
-### Run steps
-
-1. Download or clone this repository.
-2. Open a terminal or command prompt in the project folder.
-3. Start Claude with this project loaded so it can see the skills in `.claude/skills`.
-4. In Claude, run `/contour-mind` and press Enter.
-
-### First run example
-
-Try a rough idea like: “I want to build a bulk invoice upload flow for our back office.” Contour Mind should turn that into a structured spec and a scoped Claude Code prompt.
-
-## Why it exists
-
-Most AI‑assisted development tools focus on code generation: they help you build once you already know what to build. Contour Mind focuses on the step before that.
-
-It helps you clarify what problem is actually being solved, who is affected, what assumptions you are making, what edge cases could break the solution, and where the MVP boundary should sit. The result is a structured spec and a scoped Claude Code prompt — not just more questions.
+The output is two things:
+- A structured markdown spec covering the problem statement, goals, non-goals, user flow, edge cases, failure modes, constraints, and MVP scope.
+- A scoped implementation prompt ready to hand to a coding agent.
 
 ## How it works
 
-Contour Mind uses an adaptive router that quietly selects the right thinking frame based on the shape of the conversation. You do not need to know the names of any frameworks.
+The core is an adaptive router. Rather than walking you through a fixed questionnaire, it diagnoses what kind of thinking is needed next:
 
-- If the idea is vague, it clarifies the level of abstraction.  
-- If the problem is large, it decomposes it into branches.  
-- If assumptions are weak, it tests them.  
-- If failure matters, it explores what could go wrong.  
-- If too many tasks compete, it helps you prioritize.
+- If the idea is vague, it clarifies the level of abstraction.
+- If the problem is large, it decomposes it into branches.
+- If assumptions are weak, it tests them.
+- If failure modes matter, it inverts the problem.
+- If too many things compete, it helps you prioritize.
 
-Internally, it draws on models like abstraction laddering, issue trees, first principles, inversion, and second‑order thinking, but you experience it as a natural conversation.
+Once the spec is shaped, a second skill — `contour-verify` — checks it for completeness, consistency, and implementation readiness before anything gets built.
 
-## Workflow
+A spec only passes when implementation-critical ambiguity has been resolved or explicitly captured as an open decision with a default recommendation. Nothing vague gets through.
 
-Use Contour Mind to shape the spec, then Contour Verify to harden it before implementation.
+## The workflow
 
-1. Run `contour-mind` to turn a rough idea into a structured spec.
-2. Run `contour-verify` to check the spec for completeness and buildability.
-3. Revise the spec before handing it to an implementation agent.
+1. Run `contour-mind` — turn a rough idea into a structured spec.
+2. Run `contour-verify` — check the spec for gaps before implementation.
+3. Hand the final spec to your coding agent.
 
-## Verification checks
+## Get started
 
-`contour-verify` checks the spec for:
+This repo contains two ready-to-use skill setups — one for Claude Code, one for Codex.
 
-- Missing goals or non‑goals.  
-- Ambiguous requirements.  
-- Missing edge cases or failure modes.  
-- Conflicting constraints.  
-- Unclear MVP scope.  
-- Weak testability or implementation readiness.
+- **Claude Code** → [claude/](claude/)
+- **Codex** → [codex/](codex/)
 
-## Output
+Each folder has its own README with setup instructions.
 
-The thinking layer produces two artifacts:
+**No full skill setup needed?** Copy [references/router-spec.md](references/router-spec.md) as `CLAUDE.md` or `AGENTS.md` into any project root. The agent will follow the full router logic immediately, without any additional configuration.
 
-- **Structured markdown spec** — covers problem statement, goals, non‑goals, user stories, edge cases, failure modes, constraints, MVP scope, and success criteria.  
-- **Claude Code prompt** — a scoped, actionable implementation prompt derived directly from the spec.
+## Go deeper
 
-## Example
-
-Rough idea: “I want a bulk invoice upload flow.”
-
-Contour Mind helps turn that into a problem statement, a decomposed workflow, key assumptions, edge cases like invalid files or duplicate uploads, and a scoped prompt for implementing the first slice.
-
-## How the router thinks
-
-The router chooses the smallest useful thinking frame for the current moment.
-
-- Use abstraction laddering when the idea is vague or overly solution‑shaped.  
-- Use issue trees when the problem can be split into independent branches.  
-- Use first principles when assumptions are weak or uncertain.  
-- Use inversion when failure modes matter.  
-- Use second‑order thinking when downstream effects matter.  
-- Use decision support when multiple options or competing tasks need ordering.
-
-If no single frame fits, the router can blend or sequence frames over the conversation.
-
-## What’s in this repo
-
-- `.claude/skills/contour-mind/SKILL.md` — discovery and spec generation workflow.  
-- `.claude/skills/contour-verify/SKILL.md` — spec review and validation workflow.  
-- `docs/paper.md` — design paper covering the router, mental models, and future work.  
-- `references/` — supporting notes.  
-- `examples/` — sample inputs and outputs.
-
-See `docs/paper.md` for a deeper dive into the router design and thinking frames.
+- [docs/paper.md](docs/paper.md) — the full design paper: the router, the mental models, the three-layer architecture, and future work.
+- [references/router-spec.md](references/router-spec.md) — the detailed router spec with routing tables, readiness checks, and closure gate.
+- [examples/](examples/) — sample prompts showing the kind of ideas Contour Mind is built to handle.

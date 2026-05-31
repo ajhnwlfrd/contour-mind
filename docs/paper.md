@@ -2,29 +2,29 @@
 
 ## Abstract
 
-Contour Mind is a research project for building a Claude skill that helps software developers move from vague ideas to clear, actionable specifications. The central idea is that developers should not need to know the names of thinking frameworks or mental models in order to benefit from them. Instead, the skill should quietly use those frameworks in the background to ask better questions, reduce cognitive load, clarify intent, expose assumptions, and produce a buildable software specification. This paper focuses only on the thinking layer of Contour Mind. The broader system may eventually include orchestration and implementation layers, but those are treated as future work.
+Contour Mind is a research project for building an AI skill that helps software developers move from vague ideas to clear, actionable specifications. Its central claim is that developers should not need to know the names of thinking frameworks or mental models to benefit from them. Instead, the skill can use those frameworks in the background to ask better questions, reduce cognitive load, clarify intent, expose assumptions, and produce a buildable software specification. This paper focuses only on the thinking layer of Contour Mind. The orchestration and implementation layers are treated as future work.
 
 ## Purpose
 
-Software development often starts with unclear intent. A developer, product owner, founder, or business user may say, “I want to build this feature,” but the request is often incomplete. The real problem may not be clear, the user may already be jumping to a solution, assumptions may be hidden, edge cases may not have been considered, constraints may be missing, and the implementation prompt given to a coding agent may be too broad or too vague.
+Software development often starts with unclear intent. A developer, product owner, founder, or business user may say, “I want to build this feature,” but the request is often incomplete. The real problem may be unclear, the user may be jumping to a solution, assumptions may be hidden, edge cases may be missing, constraints may be absent, and the implementation prompt given to a coding agent may be too broad or too vague.
 
 Contour Mind exists to solve this early-stage problem. Its purpose is to help users turn rough software ideas into structured, testable, implementation-ready specifications through a guided discovery process. The goal is not to teach users mental models. The goal is to use mental models internally so that the conversation becomes sharper, simpler, and more useful.
 
 ## Scope of This Paper
 
-Contour Mind is envisioned as a three-layer system: thinking layer, orchestration layer, and implementation layer. The thinking layer performs discovery, problem decomposition, mental-model-guided questioning, and structured spec generation. The orchestration layer is future work. It may hold the generated spec as a living document, monitor implementation output, detect drift, and refine or re-prompt when needed. The implementation layer is also future work. This is where Claude Code or a similar coding agent would execute discrete, well-scoped development tasks based on the generated spec.
+Contour Mind is envisioned as a three-layer system: thinking layer, orchestration layer, and implementation layer. The thinking layer performs discovery, problem decomposition, mental-model-guided questioning, and structured spec generation. The orchestration layer is future work. It may hold the generated spec as a living document, monitor implementation output, detect drift, and refine or re-prompt when needed. The implementation layer is also future work. This is where a coding agent would execute discrete, well-scoped development tasks based on the generated spec.
 
 This paper focuses only on the thinking layer. The orchestration and implementation layers are referenced only to show how the thinking layer may eventually fit into a larger end-to-end software development workflow.
 
 ## Core Idea
 
-The core idea behind Contour Mind is simple: a good specification is not created by asking more questions. It is created by asking the right question at the right time. Most AI-assisted development tools focus on code generation. They help users build once the user already knows what to build. Contour Mind focuses on the step before coding.
+The core idea behind Contour Mind is simple: a good specification is not created by asking more questions, but by asking the right question at the right time. Most AI-assisted development tools focus on code generation. They help users build once they already know what to build. Contour Mind focuses on the step before coding.
 
 It helps the user clarify what problem is actually being solved, who is affected by the problem, what outcome is expected, what assumptions are being made, what constraints matter, what edge cases could break the solution, what should be built first, what should not be built yet, what would make the implementation successful, and what would make it fail. The thinking layer acts like a senior product thinker, architect, and analyst sitting beside the user before implementation begins.
 
 ## Design Principle
 
-The main design principle is: use mental models internally, but keep the user experience conversational. The user should not be forced to choose from frameworks such as first principles, inversion, issue trees, abstraction laddering, or second-order thinking. Instead, the skill should infer which thinking frame is useful from the shape of the conversation.
+The main design principle is to use mental models internally while keeping the user experience conversational. The user should not be forced to choose from frameworks such as first principles, inversion, issue trees, abstraction laddering, or second-order thinking. Instead, the skill should infer which thinking frame is useful from the shape of the conversation.
 
 For example, if the idea is vague, the skill should clarify the level of abstraction. If the problem is large, the skill should decompose it. If assumptions are weak, the skill should test them. If failure matters, the skill should explore what could go wrong. If there are too many possible next steps, the skill should help prioritize. The user experiences this as a natural conversation. The mental model remains mostly invisible.
 
@@ -50,7 +50,7 @@ The first version of the thinking layer should focus on a small set of high-valu
 
 #### Abstraction Laddering
 
-Abstraction laddering is used when the problem is vague, solution-shaped, or mixed with implementation details. It helps the skill move up or down the level of thinking. For example, a user may say, “I want to build a dashboard.” The skill should not immediately create dashboard requirements. It should first ask, “What decision should this dashboard help someone make?” This moves the conversation up from solution to purpose. The skill may then move back down into concrete details: “What information does the user need in order to make that decision?” Abstraction laddering helps prevent the system from solving the wrong problem well.
+Abstraction laddering is used when the problem is vague, solution-shaped, or mixed with implementation details. It helps the skill move between levels of abstraction. For example, a user may say, “I want to build a dashboard.” The skill should not immediately create dashboard requirements. It should first ask, “What decision should this dashboard help someone make?” This moves the conversation up from solution to purpose. The skill may then move back down into concrete details: “What information does the user need in order to make that decision?” Abstraction laddering helps prevent the system from solving the wrong problem well.
 
 #### Issue Trees
 
@@ -82,7 +82,7 @@ Ishikawa thinking is useful when recurring issues need to be grouped into cause 
 
 #### Ladder of Inference
 
-The ladder of inference is used when the user appears to be drawing conclusions too quickly. For example, “Users do not like this screen.” The skill may ask, “What have users actually said or done?” This separates observation from interpretation. The ladder of inference helps clarify what was observed, what was selected from the observation, what meaning was assigned, what assumption was made, what conclusion was reached, and what action is being proposed. This reduces the risk of building based on unsupported conclusions.
+The ladder of inference is used when the user appears to be drawing conclusions too quickly. For example, “Users do not like this screen.” The skill may ask, “What have users actually said or done?” This separates observation from interpretation. The ladder of inference helps clarify what was observed, what was selected from the observation, what meaning was assigned, what assumption was made, what conclusion was reached, and what action is being proposed. This reduces the risk of building on unsupported conclusions.
 
 #### Concept Mapping
 
@@ -98,7 +98,7 @@ A decision matrix is used when several viable options exist. For example, “Sho
 
 #### Prioritization
 
-Prioritization is used when too many tasks or branches compete for attention. The skill should help identify what must be built first, what can wait, what is risky, what unlocks other work, what is valuable but non-essential, and what should be excluded from the MVP. Prioritization helps keep the final spec buildable. Without prioritization, the output may become too broad for Claude Code or any implementation agent to execute effectively.
+Prioritization is used when too many tasks or branches compete for attention. The skill should help identify what must be built first, what can wait, what is risky, what unlocks other work, what is valuable but non-essential, and what should be excluded from the MVP. Prioritization helps keep the final spec buildable. Without prioritization, the output may become too broad for any implementation agent to execute effectively.
 
 ## Default Routing Sequence
 
@@ -112,15 +112,15 @@ The interaction should feel collaborative, not mechanical. The skill should ask 
 
 ## Output
 
-The thinking layer produces two primary artifacts: a structured markdown specification and a Claude Code-ready implementation prompt. These two outputs serve different purposes. The specification captures intent. The Claude Code prompt transfers that intent into execution.
+The thinking layer produces two primary artifacts: a structured markdown specification and an implementation prompt ready for any coding agent. These two outputs serve different purposes. The specification captures intent. The implementation prompt transfers that intent into execution.
 
 ## Structured Markdown Specification
 
 The structured specification should include title, problem statement, background, goals, non-goals, users and stakeholders, current workflow, proposed workflow, functional requirements, non-functional requirements, business rules, data requirements, user stories, edge cases, failure modes, constraints, open questions, MVP scope, success criteria, and implementation notes. The spec should be readable by both humans and AI coding tools. It should be specific enough to guide implementation but not so detailed that it prematurely dictates every technical decision.
 
-## Claude Code Prompt Output
+## Implementation Prompt Output
 
-The Claude Code prompt should be derived from the completed specification. It should be narrow, actionable, and tied directly to the documented goals and constraints. The prompt should include the specific task to implement, relevant context from the spec, files or areas likely to be affected if known, functional requirements, constraints, edge cases, expected output, testing expectations, what not to change, and how to report uncertainty. The prompt should avoid broad instructions such as “Build the whole feature.” Instead, it should produce scoped implementation tasks such as “Implement CSV validation for the bulk invoice upload flow according to the following rules.” This keeps implementation work discrete, reviewable, and safer.
+The implementation prompt should be derived from the completed specification. It should be narrow, actionable, and tied directly to the documented goals and constraints. The prompt should include the specific task to implement, relevant context from the spec, files or areas likely to be affected if known, functional requirements, constraints, edge cases, expected output, testing expectations, what not to change, and how to report uncertainty. The prompt should avoid broad instructions such as “Build the whole feature.” Instead, it should produce scoped implementation tasks such as “Implement CSV validation for the bulk invoice upload flow according to the following rules.” This keeps implementation work discrete, reviewable, and safer.
 
 ## Discovery Stage
 
@@ -128,7 +128,7 @@ The discovery stage is where the thinking layer gathers and clarifies informatio
 
 ## Verification Stage
 
-The verification stage checks whether the specification is ready for implementation. It should test the spec for completeness, consistency, buildability, ambiguity, missing edge cases, conflicting requirements, hidden assumptions, unclear ownership, weak success criteria, and oversized scope. The purpose of verification is to prevent a polished but ambiguous document from reaching implementation. This is especially important when the spec will be passed to Claude Code or another coding agent. A coding agent can only execute well when the task is clear, bounded, and testable.
+The verification stage checks whether the specification is ready for implementation. It should test the spec for completeness, consistency, buildability, ambiguity, missing edge cases, conflicting requirements, hidden assumptions, unclear ownership, weak success criteria, and oversized scope. The purpose of verification is to prevent a polished but ambiguous document from reaching implementation. This is especially important when the spec will be passed to a coding agent. A coding agent can only execute well when the task is clear, bounded, and testable.
 
 ## Research Sources
 
@@ -140,22 +140,27 @@ This project explores three main research questions: Which mental models are mos
 
 ## MVP Scope
 
-The first version of Contour Mind should focus only on the thinking layer. The MVP should support vague idea intake, adaptive questioning, mental-model-guided routing, problem decomposition, assumption discovery, edge case discovery, MVP boundary definition, structured markdown spec generation, Claude Code prompt generation, and spec verification checklist. The MVP should not attempt to support live implementation monitoring, automatic drift detection, code review, multi-agent orchestration, full OODA loop automation, or automatic rewriting of the spec during implementation. Those capabilities belong to future orchestration and implementation layers.
+The first version of Contour Mind should focus only on the thinking layer. The MVP should support vague idea intake, adaptive questioning, mental-model-guided routing, problem decomposition, assumption discovery, edge case discovery, MVP boundary definition, structured markdown spec generation, implementation prompt generation, and spec verification checklist. The MVP should not attempt to support live implementation monitoring, automatic drift detection, code review, multi-agent orchestration, full OODA loop automation, or automatic rewriting of the spec during implementation. Those capabilities belong to future orchestration and implementation layers.
 
 ## Future Work
 
-Future versions of Contour Mind may extend beyond the thinking layer. The orchestration layer may hold the spec as a living document and compare implementation output against the original intent. It may follow an OODA-style loop: observe the implementation output, orient against the specification, decide whether drift or ambiguity exists, and act by refining the spec or generating a better prompt. The implementation layer may use Claude Code or a similar coding agent to execute discrete development tasks. Together, these future layers could create a self-correcting workflow where the system does not merely generate a spec once, but continues to protect the intent of the spec during implementation. However, this paper does not define those layers in detail. They remain future work.
+Future versions of Contour Mind may extend beyond the thinking layer. The orchestration layer may hold the spec as a living document and compare implementation output against the original intent. It may follow an OODA-style loop: observe the implementation output, orient against the specification, decide whether drift or ambiguity exists, and act by refining the spec or generating a better prompt. The implementation layer may use a coding agent to execute discrete development tasks. Together, these future layers could create a self-correcting workflow where the system does not merely generate a spec once, but continues to protect the intent of the spec during implementation. However, this paper does not define those layers in detail. They remain future work.
 
 ## Conclusion
 
-Contour Mind is a thinking layer for turning unclear software ideas into clear, structured, implementation-ready specifications. Its central belief is that better software begins before coding. The quality of implementation depends on the quality of the specification. The quality of the specification depends on the quality of the thinking that produced it.
+Contour Mind is a thinking layer for turning unclear software ideas into clear, structured, implementation-ready specifications. Its central belief is that better software begins before coding. The quality of implementation depends on the quality of the specification, and the quality of the specification depends on the quality of the thinking that produced it.
 
 By using mental models internally, Contour Mind helps users clarify problems, expose assumptions, discover edge cases, define scope, and produce better prompts for coding agents. The user does not need to know the framework names. The user only needs to experience a better conversation. That is the promise of Contour Mind: from messy idea to buildable spec.
 
-## Example
-User: I want to build a dashboard.
 
-Contour Mind does not immediately create dashboard requirements.
-It first asks: What decision should this dashboard help someone make?
+## Design Constraints
 
-If the answer reveals that the dashboard is really about operational risk, the router may move from abstraction laddering to issue-tree decomposition or inversion.
+Contour Mind makes a few deliberate tradeoffs. It is optimized for feature-level discovery rather than long-horizon product planning. It is intended to support one focused conversation at a time rather than a broad portfolio of initiatives. It also favors adaptive questioning over rigid form filling, which means the skill should feel conversational even when the underlying reasoning is structured.
+
+## How to Extend
+
+The router can be extended by adding new mental models only when they solve a distinct problem category that the current set does not cover well. New routes should follow the same pattern as the existing ones: define the trigger signals, opening question, exit condition, and likely handoff. This keeps the thinking layer consistent as it grows.
+
+## README Example
+
+A good README should show one short end-to-end example. For instance: a rough idea enters the thinking layer, the router selects a decomposition frame, the conversation produces a structured spec, the verifier catches any gaps, and the final output becomes an implementation prompt. Showing that flow in a few lines makes the repo easier to understand without needing to read the full paper first.
