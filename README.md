@@ -1,5 +1,7 @@
 # Contour Mind
 
+![Status](https://img.shields.io/badge/status-experimental-orange) ![Works with Claude Code](https://img.shields.io/badge/works%20with-Claude%20Code-blueviolet) ![Works with Codex](https://img.shields.io/badge/works%20with-Codex-blue) ![License: MIT](https://img.shields.io/badge/license-MIT-green)
+
 Most AI-assisted development tools focus on code generation. They help you build once you already know what to build. Contour Mind focuses on the step before that — the step most people skip.
 
 This is spec-driven development: the idea that the quality of what you build is determined before a single line of code is written.

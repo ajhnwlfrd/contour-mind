@@ -16,6 +16,21 @@ Contour Mind is envisioned as a three-layer system: thinking layer, orchestratio
 
 This paper focuses only on the thinking layer. The orchestration and implementation layers are referenced only to show how the thinking layer may eventually fit into a larger end-to-end software development workflow.
 
+```mermaid
+flowchart LR
+    A["Thinking layer\nDiscovery · Spec generation\n← this paper"]
+    B["Orchestration layer\nLiving spec · Drift detection\nOODA loop\n← future work"]
+    C["Implementation layer\nCoding agent execution\n← future work"]
+
+    A -->|spec + prompt| B
+    B -->|scoped tasks| C
+    C -->|output| B
+
+    style A fill:#4a6fa5,color:#fff,stroke:#4a6fa5
+    style B fill:#aaa,color:#fff,stroke:#aaa
+    style C fill:#aaa,color:#fff,stroke:#aaa
+```
+
 ## Core Idea
 
 The core idea behind Contour Mind is simple: a good specification is not created by asking more questions, but by asking the right question at the right time. Most AI-assisted development tools focus on code generation. They help users build once they already know what to build. Contour Mind focuses on the step before coding.
@@ -43,6 +58,25 @@ The router is the core decision mechanism inside the thinking layer. Its job is 
 A single adaptive router keeps the experience coherent. Without a router, the skill may behave like a collection of disconnected frameworks. The user may feel that the conversation is jumping between tools without a clear reason. With one adaptive router, the skill behaves like one intelligent conversation.
 
 The router classifies the current state of the problem, chooses the next useful frame, asks targeted questions, and changes direction when the user’s answer reveals a better path. This matters because discovery work is rarely linear. A user may begin with a feature idea, but the real issue may be a workflow problem. A technical constraint may reveal a business rule. A user story may expose a missing edge case. A failure mode may reveal a hidden dependency. The router allows the thinking layer to move naturally between framing, decomposition, diagnosis, risk analysis, and execution planning.
+
+```mermaid
+flowchart TD
+    A([Rough idea]) --> R[Adaptive router]
+
+    R --> CD["Core decomposition\nAbstraction laddering · Issue trees\nFirst principles · Inversion · Second-order thinking"]
+    R --> DE["Diagnostic extensions\nIceberg · Ishikawa\nLadder of inference · Concept map"]
+    R --> EC["Execution choice\nDecision matrix · Prioritization"]
+
+    CD --> S[Spec synthesis]
+    DE --> S
+    EC --> S
+
+    S --> O([Structured spec\n+\nImplementation prompt])
+
+    style R fill:#4a6fa5,color:#fff,stroke:#4a6fa5
+    style S fill:#4a6fa5,color:#fff,stroke:#4a6fa5
+    style O fill:#2e7d32,color:#fff,stroke:#2e7d32
+```
 
 ### Core Decomposition Models
 

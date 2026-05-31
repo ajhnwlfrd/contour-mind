@@ -31,3 +31,18 @@ Return:
 - Short list of issues.
 - Suggested fixes.
 - Whether the spec is ready for implementation.
+
+## Sample output
+
+**Spec reviewed:** Bulk invoice upload flow.
+
+**Result:** Needs revision.
+
+**Issues found:**
+- Resume behaviour after a partial upload failure is not defined.
+- Success criteria does not specify what happens to rejected rows after submission.
+- Permission model is missing — who can upload, and can they see each other's uploads?
+
+**Suggested fixes:** Add an open decision for partial failure handling with a default. Clarify whether rejected rows are discarded or held for retry. Add a permissions constraint to the non-goals or requirements.
+
+**Ready for implementation:** No — resolve or capture the three issues above as open decisions before handing to a coding agent.

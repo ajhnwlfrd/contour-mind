@@ -65,3 +65,26 @@ Do not emit the final prompt until implementation-critical ambiguity is resolved
 
 ## Verification handoff
 At the end of the spec, run the contour-verify checklist before finalizing the prompt.
+
+## Sample output
+
+**Input:** "I want to build a bulk invoice upload flow for our back office."
+
+---
+
+**Problem statement:** Finance staff manually enter invoice data from CSV files, causing errors and delays. A bulk upload flow would let users upload, validate, and submit invoices in one workflow.
+
+**Goals:** CSV upload and parsing, field validation with user-facing errors, duplicate detection, submission to the billing system.
+
+**Non-goals:** PDF matching, multi-currency support, and batch scheduling are out of scope for V1.
+
+**Edge cases:** Missing required fields, duplicate invoice numbers, invalid currency codes, partial upload failures, files exceeding size limits.
+
+**Open decisions:**
+- Should users correct individual rows inline or re-upload the full file? *Default: inline correction.*
+
+**Success criteria:** A finance user can upload a 500-row CSV, review and fix validation errors, and submit without engineering involvement.
+
+---
+
+**Codex prompt:** Implement a CSV upload flow for bulk invoice ingestion. Accept CSV files up to 10MB. Validate each row for required fields (invoice number, amount, currency, due date). Flag duplicates by invoice number. Show a row-level error table for invalid entries with inline correction. On submit, POST valid rows to `/api/invoices/batch`. Return a summary of accepted and rejected rows.
